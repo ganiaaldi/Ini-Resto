@@ -30,6 +30,13 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_fonts: ^2.1.0
   splashscreen: ^1.2.0
+  flutter_launcher_icons: "^0.9.1"
+  provider: ^5.0.0
+
+flutter_icons:
+  image_path: "assets/splash.png"
+  android: true # can specify file name here e.g. "ic_launcher"
+  ios: true # can specify file name here e.g. "My-Launcher-Icon"
 
 dev_dependencies:
   flutter_test:

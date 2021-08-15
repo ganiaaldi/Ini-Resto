@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ganiaprojects.ini_resto">
    <application
-        android:label="ini_resto"
+        android:label="Ini Resto"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
