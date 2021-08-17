@@ -13,7 +13,7 @@ class RestaurantProvider extends ChangeNotifier {
     if (type == 'list') {
       fetchAllRestaurant();
     } else if (type == 'detail') {
-      fetchRestaurantDetail(id);
+      fetchDetailRestaurant(id);
     }
   }
 
@@ -35,7 +35,7 @@ class RestaurantProvider extends ChangeNotifier {
       if (restaurantList.restaurants.isEmpty) {
         _state = ResultState.NoData;
         notifyListeners();
-        return _message = 'Empty Data';
+        return _message = 'Data Kosong';
       } else {
         _state = ResultState.HasData;
         notifyListeners();
@@ -44,11 +44,11 @@ class RestaurantProvider extends ChangeNotifier {
     } catch (e) {
       _state = ResultState.Error;
       notifyListeners();
-      return _message = 'Error --> $e';
+      return _message = 'Tidak dapat terhubung, mohon untuk mengecek kembali koneksi.';
     }
   }
 
-  Future<dynamic> fetchRestaurantDetail(String id) async {
+  Future<dynamic> fetchDetailRestaurant(String id) async {
     try {
       _state = ResultState.Loading;
       notifyListeners();
@@ -88,7 +88,7 @@ class RestaurantProvider extends ChangeNotifier {
   //   try {
   //     final response = await apiService.postReview(review);
   //
-  //     if (!response.error) fetchRestaurantDetail(review.id!);
+  //     if (!response.error) fetchDetailRestaurant(review.id!);
   //   } catch (e) {
   //     _state = ResultState.Error;
   //     notifyListeners();

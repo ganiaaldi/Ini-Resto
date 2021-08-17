@@ -81,12 +81,12 @@ class ListDetailRestaurant {
 
   bool error;
   String message;
-  Restaurant restaurant;
+  DetailRestaurant restaurant;
 
   factory ListDetailRestaurant.fromJson(Map<String, dynamic> json) => ListDetailRestaurant(
     error: json["error"],
     message: json["message"],
-    restaurant: Restaurant.fromJson(json["restaurant"]),
+    restaurant: DetailRestaurant.fromJson(json["restaurant"]),
   );
 
   Map<String, dynamic> toJson() => {

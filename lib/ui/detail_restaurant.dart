@@ -1,124 +1,51 @@
 import 'package:flutter/material.dart';
-import 'package:ini_resto/resources/custom_scaffold.dart';
+import 'package:ini_resto/data/api/api_service.dart';
+import 'package:ini_resto/provider/restaurant_provider.dart';
+import 'package:ini_resto/widgets/custom_scaffold.dart';
+import 'package:ini_resto/widgets/widget_detail.dart';
+import 'package:provider/provider.dart';
 
-import '../model/restaurant.dart';
+import '../data/model/restaurant.dart';
 
 class RestaurantDetail extends StatelessWidget {
   static const routeName = '/restaurant_detail';
 
   final Restaurant restaurant;
 
+
   const RestaurantDetail({required this.restaurant});
 
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Hero(
-                tag: restaurant.pictureId,
-                child: Image.network(restaurant.pictureId)),
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    restaurant.name,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24,
-                    ),
-                  ),
-                  SizedBox(height: 5),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Text('Location: ${restaurant.city}'),
-                        ],
-                      ),
-                      Expanded(
-                          child: Container(
-                              height: 15,
-                              child: VerticalDivider(color: Colors.blueGrey))),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.star,
-                                color: Colors.black12,
-                              ),
-                              Text("${restaurant.rating}"),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Divider(color: Colors.grey),
-                  Text('${restaurant.description}'),
-                  SizedBox(height: 10),
-                  Divider(color: Colors.grey),
-                  SizedBox(height: 10),
-                  Text('Foods'),
-                  Divider(color: Colors.grey),
-                  Container(
-                    height: 200,
-                    child: ListView(
-                      children: restaurant.menus.foods.map((e) {
-                        return new Card(
-                          elevation: 6.0,
-                          child: new Container(
-                            child: new Row(
-                              children: <Widget>[
-                                Container(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: Text("- ${e.name.toString()}"),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Text('Drinks'),
-                  Divider(color: Colors.grey),
-                  Container(
-                    height: 200,
-                    child: ListView(
-                      children: restaurant.menus.drinks.map((e) {
-                        return new Card(
-                          elevation: 6.0,
-                          child: new Container(
-                            child: new Row(
-                              children: <Widget>[
-                                Container(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: Text("- ${e.name.toString()}"),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+      body:
+      _buildRestaurantDetails(context)
+    );
+  }
+  
+  Widget _buildRestaurantDetails(BuildContext context) {
+    RestaurantProvider _provider;
+
+    return ChangeNotifierProvider<RestaurantProvider>(
+      create: (_) => RestaurantProvider(apiService: ApiService(), type: 'detail', id: restaurant.id),
+      child: Consumer<RestaurantProvider>(
+        builder: (context, state, _) {
+          _provider = state;
+          if (state.state == ResultState.Loading) {
+            return Center(child: CircularProgressIndicator());
+          } else if (state.state == ResultState.HasData) {
+            var restaurant = state.result.restaurant;
+            return RestaurantDetailWidgets(restaurant: restaurant, provider: _provider,);
+          } else if (state.state == ResultState.NoData) {
+            return Center(child: Text(state.message));
+          } else if (state.state == ResultState.Error) {
+            return Center(child: Text("Tidak ada koneksi Internet."));
+          } else {
+            return Center(child: Text(''));
+          }
+        },
       ),
     );
   }
+
 }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:ini_resto/model/restaurant.dart';
-import 'package:ini_resto/resources/styles.dart';
-import 'package:ini_resto/ui/home_page.dart';
+import 'package:ini_resto/ui/detail_restaurant.dart';
+import 'package:ini_resto/ui/list_restaurant.dart';
 import 'package:ini_resto/ui/splash.dart';
+import 'package:ini_resto/widgets/styles.dart';
 
-import 'ui/detail_restaurant.dart';
+import 'data/model/restaurant.dart';
 
 void main() {
   runApp(MyApp());
