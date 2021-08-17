@@ -59,31 +59,31 @@ class RestaurantProvider extends ChangeNotifier {
     } catch (e) {
       _state = ResultState.Error;
       notifyListeners();
-      return _message = 'Error --> $e';
+      return _message = 'Tidak dapat terhubung, mohon untuk mengecek kembali koneksi.';
     }
   }
 
-  // Future<dynamic> fetchRestaurantSearch(String query) async {
-  //   try {
-  //     _state = ResultState.Loading;
-  //     notifyListeners();
-  //     final restaurantSearch = await apiService.restaurantSearch(query);
-  //     if (restaurantSearch.restaurants.isEmpty) {
-  //       _state = ResultState.NoData;
-  //       notifyListeners();
-  //       return _message = 'Empty Data';
-  //     } else {
-  //       _state = ResultState.HasData;
-  //       notifyListeners();
-  //       return _restaurantResult = restaurantSearch;
-  //     }
-  //   } catch (e) {
-  //     _state = ResultState.Error;
-  //     notifyListeners();
-  //     return _message = 'Error --> $e';
-  //   }
-  // }
-  //
+  Future<dynamic> fetchSearchRestaurant(String query) async {
+    try {
+      _state = ResultState.Loading;
+      notifyListeners();
+      final searchRestaurant = await apiService.searchRestaurant(query);
+      if (searchRestaurant.restaurants.isEmpty) {
+        _state = ResultState.NoData;
+        notifyListeners();
+        return _message = 'Pencarian Tidak Ditemukan.';
+      } else {
+        _state = ResultState.HasData;
+        notifyListeners();
+        return _restaurantResult = searchRestaurant;
+      }
+    } catch (e) {
+      _state = ResultState.Error;
+      notifyListeners();
+      return _message = 'Tidak dapat terhubung, mohon untuk mengecek kembali koneksi.';
+    }
+  }
+
   // Future<dynamic> postReview(Review review) async {
   //   try {
   //     final response = await apiService.postReview(review);

@@ -24,15 +24,15 @@ class ApiService {
     }
   }
 
-  // Future<RestaurantSearch> restaurantSearch(String query) async {
-  //   final response = await http.get(Uri.parse(_baseUrl + "search?q=$query"));
-  //   if (response.statusCode == 200) {
-  //     return RestaurantSearch.fromJson(json.decode(response.body));
-  //   } else {
-  //     throw Exception('Failed to load the search result.');
-  //   }
-  // }
-  //
+  Future<ResultRestaurant> searchRestaurant(String query) async {
+    final response = await http.get(Uri.parse(_baseUrl + "search?q=$query"));
+    if (response.statusCode == 200) {
+      return ResultRestaurant.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Gagal Mencari Data Restaurant.');
+    }
+  }
+
   // Future<ResponseReview> postReview(Review review) async {
   //   var _review = jsonEncode(review.toJson());
   //   final response = await http.post(

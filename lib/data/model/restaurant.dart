@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'category.dart';
 import 'customer_review.dart';
 import 'menus.dart';
@@ -147,3 +146,29 @@ class DetailRestaurant {
     "customerReviews": List<dynamic>.from(customerReviews.map((x) => x.toJson())),
   };
 }
+
+class ResultRestaurant {
+  ResultRestaurant({
+    required this.error,
+    required this.founded,
+    required this.restaurants,
+  });
+
+  bool error;
+  int founded;
+  List<Restaurant> restaurants;
+
+  factory ResultRestaurant.fromJson(Map<String, dynamic> json) => ResultRestaurant(
+    error: json["error"],
+    founded: json["founded"],
+    restaurants: List<Restaurant>.from(json["restaurants"].map((x) => Restaurant.fromJson(x))),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "error": error,
+    "founded": founded,
+    "restaurants": List<dynamic>.from(restaurants.map((x) => x.toJson())),
+  };
+}
+
+

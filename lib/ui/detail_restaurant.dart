@@ -39,7 +39,7 @@ class RestaurantDetail extends StatelessWidget {
           } else if (state.state == ResultState.NoData) {
             return Center(child: Text(state.message));
           } else if (state.state == ResultState.Error) {
-            return Center(child: Text("Tidak ada koneksi Internet."));
+            return Center(child: Text(state.message));
           } else {
             return Center(child: Text(''));
           }
