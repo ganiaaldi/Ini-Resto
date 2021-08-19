@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:ini_resto/data/model/customer_review.dart';
 import 'package:ini_resto/data/model/restaurant.dart';
 
 
@@ -33,20 +34,20 @@ class ApiService {
     }
   }
 
-  // Future<ResponseReview> postReview(Review review) async {
-  //   var _review = jsonEncode(review.toJson());
-  //   final response = await http.post(
-  //     Uri.parse(_baseUrl + "review"),
-  //     body: _review,
-  //     headers: <String, String>{
-  //       "Content-Type": "application/json",
-  //       "X-Auth-Token": "12345",
-  //     },
-  //   );
-  //   if (response.statusCode == 200) {
-  //     return ResponseReview.fromJson(json.decode(response.body));
-  //   } else {
-  //     throw Exception('Failed to post the review.');
-  //   }
-  // }
+  Future<ResponseReview> postReview(CustomerReview review) async {
+    var _review = jsonEncode(review.toJson());
+    final response = await http.post(
+      Uri.parse(_baseUrl + "review"),
+      body: _review,
+      headers: <String, String>{
+        "Content-Type": "application/json",
+        "X-Auth-Token": "12345",
+      },
+    );
+    if (response.statusCode == 200) {
+      return ResponseReview.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to post the review.');
+    }
+  }
 }

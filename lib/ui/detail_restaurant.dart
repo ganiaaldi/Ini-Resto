@@ -35,7 +35,7 @@ class RestaurantDetail extends StatelessWidget {
             return Center(child: CircularProgressIndicator());
           } else if (state.state == ResultState.HasData) {
             var restaurant = state.result.restaurant;
-            return RestaurantDetailWidgets(restaurant: restaurant, provider: _provider,);
+            return RestaurantDetailWidgets(restaurant: restaurant, provider: _provider, id: '',);
           } else if (state.state == ResultState.NoData) {
             return Center(child: Text(state.message));
           } else if (state.state == ResultState.Error) {

@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:ini_resto/data/model/customer_review.dart';
 import 'package:ini_resto/data/model/restaurant.dart';
 import 'package:ini_resto/provider/restaurant_provider.dart';
+import 'package:ini_resto/widgets/styles.dart';
 
 class RestaurantDetailWidgets extends StatelessWidget {
   final DetailRestaurant restaurant;
   final RestaurantProvider provider;
+  final String id;
 
   const RestaurantDetailWidgets(
-      {required this.restaurant, required this.provider});
+      {required this.restaurant, required this.provider, required this.id});
 
   @override
   Widget build(BuildContext context) {
+    var _nameController = TextEditingController();
+    var _reviewController = TextEditingController();
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -164,6 +169,57 @@ class RestaurantDetailWidgets extends StatelessWidget {
                       );
                     }).toList(),
                   ),
+                ),
+                SizedBox(height: 30),
+                Text('Add Reviews'),
+                SizedBox(height: 10),
+                Container(
+                    width: 300,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Nama',
+                        hintText: 'Masukan Nama',
+                      ),
+                      controller: _nameController,
+                      autofocus: false,
+                    )),
+                SizedBox(height: 10),
+                Container(
+                    width: 300,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Review',
+                        hintText: 'Masukan Review',
+                      ),
+                      autofocus: false,
+                      controller: _reviewController,
+                    )),
+                SizedBox(height: 10),
+                Container(
+                  height: 50,
+                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: primaryColor,
+                          onPrimary: Colors.white // foreground
+                          ),
+                      child: Text('Tambah Review'),
+                      onPressed: () {
+                        CustomerReview review = CustomerReview(
+                          id: id,
+                          name: _nameController.text,
+                          review: _reviewController.text,
+                          date: '',
+                        );
+                        provider.postReview(review).then((value) {
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text("Berhasil menambah review")));
+                          Navigator.pop(context);
+                        });
+                      }),
                 ),
               ],
             ),

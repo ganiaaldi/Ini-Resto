@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:ini_resto/data/api/api_service.dart';
 import 'dart:async';
 
+import 'package:ini_resto/data/model/customer_review.dart';
+
 enum ResultState { Loading, NoData, HasData, Error }
 
 class RestaurantProvider extends ChangeNotifier {
@@ -84,15 +86,14 @@ class RestaurantProvider extends ChangeNotifier {
     }
   }
 
-  // Future<dynamic> postReview(Review review) async {
-  //   try {
-  //     final response = await apiService.postReview(review);
-  //
-  //     if (!response.error) fetchDetailRestaurant(review.id!);
-  //   } catch (e) {
-  //     _state = ResultState.Error;
-  //     notifyListeners();
-  //     return _message = 'Error --> $e';
-  //   }
-  // }
+  Future<dynamic> postReview(CustomerReview review) async {
+    try {
+      final response = await apiService.postReview(review);
+      if (!response.error) fetchDetailRestaurant(review.id!);
+    } catch (e) {
+      _state = ResultState.Error;
+      notifyListeners();
+      return _message = 'Error --> $e';
+    }
+  }
 }
