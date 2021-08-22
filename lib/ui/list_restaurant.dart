@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ini_resto/data/api/api_service.dart';
 import 'package:ini_resto/provider/restaurant_provider.dart';
+import 'package:ini_resto/ui/favorite.dart';
+import 'package:ini_resto/ui/settings.dart';
 import 'package:ini_resto/widgets/card_restaurant.dart';
+import 'package:ini_resto/widgets/floating_button.dart';
 import 'package:provider/provider.dart';
 
 class RestaurantList extends StatefulWidget {
@@ -9,14 +12,18 @@ class RestaurantList extends StatefulWidget {
 
   @override
   _RestaurantList createState() => _RestaurantList();
+  RestaurantList({
+    Key? key,
+  }) : super(key: key);
 }
 
 class _RestaurantList extends State<RestaurantList> {
+  final GlobalKey<AnimatedFloatingActionButtonState> key =
+  GlobalKey<AnimatedFloatingActionButtonState>();
   final TextEditingController _filter = new TextEditingController();
   late RestaurantProvider provider;
   Icon iconBar = Icon(Icons.search);
   Widget tittleApp = new Text('IniResto');
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,6 +56,43 @@ class _RestaurantList extends State<RestaurantList> {
             ),
           ),
         ],
+      ),
+      floatingActionButton: AnimatedFloatingActionButton(
+        key: key,
+        fabButtons: <Widget>[
+          settings(),
+          favorite(),
+        ],
+        colorStartAnimation: Colors.green,
+        colorEndAnimation: Colors.red,
+        animatedIconData: AnimatedIcons.menu_close,
+      ),
+    );
+  }
+
+
+  Widget favorite() {
+    return Container(
+      child: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, Favorite.routeName);
+        },
+        heroTag: "Image",
+        tooltip: 'Image',
+        child: Icon(Icons.favorite),
+      ),
+    );
+  }
+
+  Widget settings() {
+    return Container(
+      child: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, Settings.routeName);
+        },
+        heroTag: "Inbox",
+        tooltip: 'Inbox',
+        child: Icon(Icons.settings),
       ),
     );
   }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ini_resto/ui/detail_restaurant.dart';
+import 'package:ini_resto/ui/favorite.dart';
 import 'package:ini_resto/ui/list_restaurant.dart';
+import 'package:ini_resto/ui/settings.dart';
 import 'package:ini_resto/ui/splash.dart';
 import 'package:ini_resto/widgets/styles.dart';
 
@@ -32,6 +34,8 @@ class MyApp extends StatelessWidget {
               restaurant:
                   ModalRoute.of(context)?.settings.arguments as Restaurant,
             ),
+        Favorite.routeName: (context) => Favorite(),
+        Settings.routeName: (context) => Settings(),
       },
     );
   }

@@ -32,6 +32,7 @@ dependencies:
   splashscreen: ^1.2.0
   flutter_launcher_icons: "^0.9.1"
   provider: ^5.0.0
+  animated_floatactionbuttons: ^0.1.0
 
 flutter_icons:
   image_path: "assets/splash.png"
