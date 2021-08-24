@@ -33,6 +33,12 @@ dependencies:
   flutter_launcher_icons: "^0.9.1"
   provider: ^5.0.0
   animated_floatactionbuttons: ^0.1.0
+  shared_preferences: ^2.0.5
+  sqflite: ^2.0.0+3
+  intl: ^0.17.0
+  android_alarm_manager: ^2.0.0
+  flutter_local_notifications: ^5.0.0+3
+  rxdart: ^0.26.0
 
 flutter_icons:
   image_path: "assets/splash.png"

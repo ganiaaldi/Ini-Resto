@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ini_resto/widgets/styles.dart';
+import 'home_page.dart';
 import 'list_restaurant.dart';
 
 class SplashPage extends StatelessWidget {
@@ -12,7 +13,7 @@ class SplashPage extends StatelessWidget {
 
     Future.delayed(
         const Duration(seconds: 4),
-            () => Navigator.pushReplacementNamed(context, RestaurantList.routeName)
+            () => Navigator.pushReplacementNamed(context, HomePage.routeName)
     );
 
     return Scaffold(

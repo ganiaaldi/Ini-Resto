@@ -12,14 +12,9 @@ class RestaurantList extends StatefulWidget {
 
   @override
   _RestaurantList createState() => _RestaurantList();
-  RestaurantList({
-    Key? key,
-  }) : super(key: key);
 }
 
 class _RestaurantList extends State<RestaurantList> {
-  final GlobalKey<AnimatedFloatingActionButtonState> key =
-  GlobalKey<AnimatedFloatingActionButtonState>();
   final TextEditingController _filter = new TextEditingController();
   late RestaurantProvider provider;
   Icon iconBar = Icon(Icons.search);
@@ -56,43 +51,6 @@ class _RestaurantList extends State<RestaurantList> {
             ),
           ),
         ],
-      ),
-      floatingActionButton: AnimatedFloatingActionButton(
-        key: key,
-        fabButtons: <Widget>[
-          settings(),
-          favorite(),
-        ],
-        colorStartAnimation: Colors.green,
-        colorEndAnimation: Colors.red,
-        animatedIconData: AnimatedIcons.menu_close,
-      ),
-    );
-  }
-
-
-  Widget favorite() {
-    return Container(
-      child: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, Favorite.routeName);
-        },
-        heroTag: "Image",
-        tooltip: 'Image',
-        child: Icon(Icons.favorite),
-      ),
-    );
-  }
-
-  Widget settings() {
-    return Container(
-      child: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, Settings.routeName);
-        },
-        heroTag: "Inbox",
-        tooltip: 'Inbox',
-        child: Icon(Icons.settings),
       ),
     );
   }
