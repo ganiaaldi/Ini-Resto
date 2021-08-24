@@ -41,10 +41,7 @@ ThemeData lightTheme = ThemeData(
   scaffoldBackgroundColor: Colors.white,
   visualDensity: VisualDensity.adaptivePlatformDensity,
   textTheme: myTextTheme,
-  appBarTheme: AppBarTheme(
-    textTheme: myTextTheme.apply(bodyColor: Colors.black),
-    elevation: 0,
-  ),
+  appBarTheme: AppBarTheme(textTheme: myTextTheme,color: Colors.white),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
     selectedItemColor: secondaryColor,
     unselectedItemColor: Colors.grey,
