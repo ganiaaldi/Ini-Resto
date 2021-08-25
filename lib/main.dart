@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:ini_resto/data/api/api_service.dart';
 import 'package:ini_resto/navigation.dart';
+import 'package:ini_resto/provider/database_provider.dart';
 import 'package:ini_resto/provider/preferences_provider.dart';
 import 'package:ini_resto/provider/restaurant_provider.dart';
 import 'package:ini_resto/provider/scheduling_provider.dart';
@@ -20,6 +21,7 @@ import 'package:ini_resto/utils/notification_helper.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'data/database/database_helper.dart';
 import 'data/model/restaurant.dart';
 import 'data/preferences/preferences_helper.dart';
 
@@ -58,6 +60,9 @@ class MyApp extends StatelessWidget {
               sharedPreferences: SharedPreferences.getInstance(),
             ),
           ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => DatabaseProvider(databaseHelper: DatabaseHelper()),
         ),
       ],
       child: Consumer<PreferencesProvider>(
