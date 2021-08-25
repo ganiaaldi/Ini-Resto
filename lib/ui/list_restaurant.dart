@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ini_resto/data/api/api_service.dart';
 import 'package:ini_resto/provider/restaurant_provider.dart';
-import 'package:ini_resto/ui/favorite.dart';
-import 'package:ini_resto/ui/settings.dart';
 import 'package:ini_resto/widgets/card_restaurant.dart';
-import 'package:ini_resto/widgets/floating_button.dart';
 import 'package:provider/provider.dart';
 
 class RestaurantList extends StatefulWidget {

@@ -1,12 +1,8 @@
-
 import 'package:flutter/material.dart';
-import 'package:ini_resto/provider/scheduling_provider.dart';
 import 'package:ini_resto/ui/list_restaurant.dart';
 import 'package:ini_resto/ui/settings.dart';
 import 'package:ini_resto/utils/notification_helper.dart';
 import 'package:ini_resto/widgets/floating_button.dart';
-import 'package:provider/provider.dart';
-
 import 'detail_restaurant.dart';
 import 'favorite.dart';
 
