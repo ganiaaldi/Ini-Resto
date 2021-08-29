@@ -1,34 +1,41 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ini_resto/data/api/api_service.dart';
 import 'package:ini_resto/data/model/restaurant.dart';
+import 'package:mockito/annotations.dart';
+import 'package:http/http.dart' as http;
+import 'package:mockito/mockito.dart';
+import '../lib/data/api/api_service.dart';
+import 'parsing_test.mocks.dart';
 
+@GenerateMocks([http.Client])
 void main() {
-  test('Response restaurant', () async {
-    final getList = await ApiService().restaurantList();
-    var result = getList.message;
-    expect(result, "success");
-  });
-  test("Test Parsing Restaurant ID", () async {
-    var result = Restaurant.fromJson(testParsing).id;
-    expect(result, "uewq1zg2zlskfw1e867");
-  });
-  test('Fetch name restaurant', () async {
-    final getList = await ApiService().restaurantList();
-    var result = getList.restaurants[0];
-    expect(result.name, "Melting Pot");
-  });
-  test('Fetch total restaurant', () async {
-    final getList = await ApiService().restaurantList();
-    var result = getList.count;
-    expect(result, 20);
+  group('Restaurant API Check', () {
+    test('Return List Restaurant',
+            () async {
+          final client = MockClient();
+          when(client.get(Uri.parse('https://restaurant-api.dicoding.dev/list')))
+              .thenAnswer((_) async => http.Response('{"error":false,"message":"success","count":20,"restaurants":[]}',
+              200));
+
+          expect(
+              await ApiService(client).restaurantList(), isA<ListRestaurant>());
+            });
+    test('Return Detail Restaurant',
+            () async {
+          final client = MockClient();
+          when(client.get(Uri.parse('https://restaurant-api.dicoding.dev/detail/s1knt6za9kkfw1e867')))
+              .thenAnswer((_) async => http.Response('{"error":false,"message":"success","restaurant":{"id":"s1knt6za9kkfw1e867","name":"Kafe Kita","description":"Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc,","city":"Gorontalo","address":"Jln. Pustakawan no 9","pictureId":"25","categories":[{"name":"Sop"},{"name":"Modern"}],"menus":{"foods":[{"name":"Kari kacang dan telur"},{"name":"Ikan teri dan roti"},{"name":"roket penne"},{"name":"Salad lengkeng"},{"name":"Tumis leek"},{"name":"Salad yuzu"},{"name":"Sosis squash dan mint"}],"drinks":[{"name":"Jus tomat"},{"name":"Minuman soda"},{"name":"Jus apel"},{"name":"Jus mangga"},{"name":"Es krim"},{"name":"Kopi espresso"},{"name":"Jus alpukat"},{"name":"Coklat panas"},{"name":"Es kopi"},{"name":"Teh manis"},{"name":"Sirup"},{"name":"Jus jeruk"}]},"rating":4,"customerReviews":[{"name":"Ahmad","review":"Tidak ada duanya!","date":"13 November 2019"},{"name":"Arif","review":"Tidak rekomendasi untuk pelajar!","date":"13 November 2019"},{"name":"Gilang","review":"Tempatnya bagus namun menurut saya masih sedikit mahal.","date":"14 Agustus 2018"}]}}',
+              200));
+          expect(
+              await ApiService(client).restaurantDetail('s1knt6za9kkfw1e867'), isA<ListDetailRestaurant>());
+        });
+    test('Throws exception if detail error',
+            () async {
+              final client = MockClient();
+
+              when(client.get(Uri.parse('https://restaurant-api.dicoding.dev/detail/s1knt6za9kkfw1e867')))
+                  .thenAnswer((_) async => http.Response('Not Found', 404));
+
+              expect(ApiService(client).restaurantDetail('s1knt6za9kkfw1e867'), throwsException);
+            });
   });
 }
-
-var testParsing = {
-  "id": "uewq1zg2zlskfw1e867",
-  "name": "Kafein",
-  "description": "Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc,",
-  "pictureId": "15",
-  "city": "Aceh",
-  "rating": 4.6
-};

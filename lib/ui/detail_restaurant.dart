@@ -4,7 +4,7 @@ import 'package:ini_resto/provider/restaurant_provider.dart';
 import 'package:ini_resto/widgets/custom_scaffold.dart';
 import 'package:ini_resto/widgets/widget_detail.dart';
 import 'package:provider/provider.dart';
-
+import 'package:http/http.dart' as http;
 import '../data/model/restaurant.dart';
 
 class RestaurantDetail extends StatelessWidget {
@@ -27,7 +27,7 @@ class RestaurantDetail extends StatelessWidget {
     RestaurantProvider _provider;
 
     return ChangeNotifierProvider<RestaurantProvider>(
-      create: (_) => RestaurantProvider(apiService: ApiService(), type: 'detail', id: restaurant.id),
+      create: (_) => RestaurantProvider(apiService: ApiService(http.Client()), type: 'detail', id: restaurant.id),
       child: Consumer<RestaurantProvider>(
         builder: (context, state, _) {
           _provider = state;

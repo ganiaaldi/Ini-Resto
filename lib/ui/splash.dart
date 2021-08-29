@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ini_resto/widgets/styles.dart';
 import 'home_page.dart';
-import 'list_restaurant.dart';
 
 class SplashPage extends StatelessWidget {
 

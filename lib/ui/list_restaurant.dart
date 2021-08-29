@@ -3,6 +3,7 @@ import 'package:ini_resto/data/api/api_service.dart';
 import 'package:ini_resto/provider/restaurant_provider.dart';
 import 'package:ini_resto/widgets/card_restaurant.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
 class RestaurantList extends StatefulWidget {
   static const routeName = '/restaurant_list';
@@ -55,7 +56,7 @@ class _RestaurantList extends State<RestaurantList> {
   Widget _buildRestaurantItem(BuildContext context) {
     return ChangeNotifierProvider<RestaurantProvider>(
       create: (_) =>
-          RestaurantProvider(apiService: ApiService(), type: 'list', id: ''),
+          RestaurantProvider(apiService: ApiService(http.Client()), type: 'list', id: ''),
       child: Consumer<RestaurantProvider>(
         builder: (context, state, _) {
           provider = state;

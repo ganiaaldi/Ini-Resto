@@ -20,7 +20,7 @@ import 'package:ini_resto/utils/background_service.dart';
 import 'package:ini_resto/utils/notification_helper.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:http/http.dart' as http;
 import 'data/database/database_helper.dart';
 import 'data/model/restaurant.dart';
 import 'data/preferences/preferences_helper.dart';
@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (_) =>
-              RestaurantProvider(apiService: ApiService(), type: '', id: ''),
+              RestaurantProvider(apiService: ApiService(http.Client()), type: '', id: ''),
         ),
         ChangeNotifierProvider(create: (_) => SchedulingProvider()),
         ChangeNotifierProvider(
@@ -68,13 +68,6 @@ class MyApp extends StatelessWidget {
       child: Consumer<PreferencesProvider>(
         builder: (context, provider, child) {
           return MaterialApp(
-            // theme: ThemeData(
-            //   primaryColor: primaryColor,
-            //   accentColor: secondaryColor,
-            //   textTheme: myTextTheme,
-            //   visualDensity: VisualDensity.adaptivePlatformDensity,
-            //   appBarTheme: AppBarTheme(textTheme: myTextTheme),
-            // ),
             title: 'Ini Resto',
             theme: provider.themeData,
             navigatorKey: navigatorKey,
